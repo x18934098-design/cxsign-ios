@@ -13,8 +13,14 @@ on:
 
 jobs:
   build:
-    runs-on: macos-14
-    timeout-minutes: 25
+    # macos-13 是 Intel 镜像，macos-15 是 arm64 镜像；
+    # 两者同时跑，哪个可用就用哪个产出的 ipa（arm64 镜像在部分账号上会直接被取消）。
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-13, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
