@@ -5,6 +5,8 @@ name: build-ipa
 #
 # 用法：把 ChaoxingSigner-iOS 目录里的内容推到一个 GitHub 仓库（作为仓库根目录），
 # 打开 Actions → build-ipa → Run workflow，跑完在 Artifacts 里下载 ChaoxingSigner-unsigned。
+#
+# 编译失败时，错误摘要会被写进 run 页面的 Summary（Step Summary），不需要登录也能看到。
 
 on:
   workflow_dispatch:
@@ -20,7 +22,7 @@ jobs:
       matrix:
         os: [macos-13, macos-15]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +33,8 @@ jobs:
           xcrun --sdk iphoneos --show-sdk-version
 
       - name: 编译（关闭签名）
+        id: build
+        continue-on-error: true
         run: |
           set -o pipefail
           xcodebuild \
@@ -38,14 +42,46 @@ jobs:
             -scheme ChaoxingSigner \
             -configuration Release \
             -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGN_ENTITLEMENTS="" \
-            build
+            build 2>&1 | tee build.log
+          exit $?
+
+      - name: 把编译错误写进 Summary
+        if: always()
+        run: |
+          {
+            echo '## 编译结果'
+            echo ''
+            echo "- 镜像：${{ matrix.os }}"
+            echo "- 退出码：${{ steps.build.outcome }}"
+            echo ''
+            if grep -qE '(^| )error: ' build.log 2>/dev/null; then
+              echo '### errors'
+              echo '```'
+              grep -nE '(^| )error: ' build.log | head -80
+              echo '```'
+            fi
+            if grep -qE 'warning: (unable to|no such|unknown)' build.log 2>/dev/null; then
+              echo '### notable warnings'
+              echo '```'
+              grep -nE 'warning: (unable to|no such|unknown)' build.log | head -30
+              echo '```'
+            fi
+            if [ ! -s build.log ] || ! grep -qE '(^| )error: ' build.log; then
+              echo '### 日志尾部'
+              echo '```'
+              tail -60 build.log 2>/dev/null
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: 打包未签名 ipa
+        if: steps.build.outcome == 'success'
         run: |
           APP="build/Build/Products/Release-iphoneos/ChaoxingSigner.app"
           test -d "$APP"
@@ -56,7 +92,8 @@ jobs:
           /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Info.plist"
 
       - uses: actions/upload-artifact@v4
+        if: steps.build.outcome == 'success'
         with:
-          name: ChaoxingSigner-unsigned
+          name: ChaoxingSigner-unsigned-${{ matrix.os }}
           path: ChaoxingSigner-unsigned.ipa
           if-no-files-found: error
