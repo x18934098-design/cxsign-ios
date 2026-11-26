@@ -36,6 +36,16 @@ jobs:
           xcrun --sdk iphoneos --show-sdk-version
           xcodebuild -list -project ChaoxingSigner.xcodeproj
 
+      - name: 快速类型检查（一次列出所有 Swift 错误）
+        continue-on-error: true
+        run: |
+          SDK=$(xcrun --sdk iphoneos --show-sdk-path)
+          # shellcheck disable=SC2046
+          xcrun swiftc -typecheck -sdk "$SDK" -target arm64-apple-ios17.0 \
+            $(find ChaoxingSigner -name '*.swift' | sort) 2>&1 | tee typecheck.log \
+            | grep -E 'error:|warning: .*(unused|never)' || true
+          echo "----" >> typecheck.log
+
       - name: 编译（关闭签名）
         id: build
         continue-on-error: true
@@ -48,6 +58,7 @@ jobs:
             -sdk iphoneos \
             -destination 'generic/platform=iOS' \
             -derivedDataPath build \
+            -keepGoing \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
@@ -64,7 +75,10 @@ jobs:
             echo "os: ${{ matrix.os }}"
             echo "outcome: ${{ steps.build.outcome }}"
             echo ""
-            echo "===== errors ====="
+            echo "===== typecheck errors ====="
+            grep -nE 'error: ' typecheck.log 2>/dev/null | head -120
+            echo ""
+            echo "===== build errors ====="
             grep -nE '(^| )error: ' build.log 2>/dev/null | head -120
             echo ""
             echo "===== warnings (selected) ====="

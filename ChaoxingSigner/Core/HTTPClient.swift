@@ -18,11 +18,13 @@ struct QueryBuilder {
     @discardableResult
     mutating func add(_ name: String, _ value: Int) -> QueryBuilder {
         items.append((name, String(value)))
+        return self
     }
 
     @discardableResult
     mutating func add(_ name: String, _ value: Int64) -> QueryBuilder {
         items.append((name, String(value)))
+        return self
     }
 
     /// 原版 `xh0.k` 的 Referer 兜底：data-xxt 域被替换成 mobilelearn
