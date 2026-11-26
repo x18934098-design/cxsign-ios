@@ -47,8 +47,8 @@
 		6C54325064C432DF7E1B1E1F /* UI/RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootView.swift"; sourceTree = "<group>"; };
 		3393949AC9004D2E395F2023 /* UI/SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
 		1AE00A24F4B0C0DE08FA67AF /* UI/SignActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignActionSheet.swift"; sourceTree = "<group>"; };
-		7B317B44935B5652E9A0EA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Resources/Info.plist; sourceTree = "<group>"; };
-		D7C6C251336CA1D1EEE33A7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		7B317B44935B5652E9A0EA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ChaoxingSigner/Resources/Info.plist; sourceTree = "<group>"; };
+		D7C6C251336CA1D1EEE33A7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ChaoxingSigner/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		F5BF48AA40CAD7891EB709FC /* ChaoxingSigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChaoxingSigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -89,7 +89,7 @@
 				0661F421A9DAF96A220718FF /* AppState.swift */,
 				0E417BF9944445A74AB41306 /* ChaoxingSignerApp.swift */,
 			);
-			path = App;
+			path = ChaoxingSigner/App;
 			sourceTree = "<group>";
 		};
 		39173558B7F8BBD9119F85A1 /* Core */ = {
@@ -107,7 +107,7 @@
 				66A055DA1F6650C6B3E2DCF4 /* SignCoordinator.swift */,
 				5F6B34D66442336664CD03F5 /* SignResponseParser.swift */,
 			);
-			path = Core;
+			path = ChaoxingSigner/Core;
 			sourceTree = "<group>";
 		};
 		96D7D5659D1003A0F191DD67 /* UI */ = {
@@ -119,7 +119,7 @@
 				3393949AC9004D2E395F2023 /* SettingsView.swift */,
 				1AE00A24F4B0C0DE08FA67AF /* SignActionSheet.swift */,
 			);
-			path = UI;
+			path = ChaoxingSigner/UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
