@@ -6,21 +6,24 @@ name: build-ipa
 # 用法：把 ChaoxingSigner-iOS 目录里的内容推到一个 GitHub 仓库（作为仓库根目录），
 # 打开 Actions → build-ipa → Run workflow，跑完在 Artifacts 里下载 ChaoxingSigner-unsigned。
 #
-# 编译失败时，错误摘要会被写进 run 页面的 Summary（Step Summary），不需要登录也能看到。
+# 编译日志：失败时会把错误写成仓库 ci-logs 分支上的 ci-error-<os>.txt，
+# 这样不登录 GitHub 也能读到具体报错（raw.githubusercontent.com）。
 
 on:
   workflow_dispatch:
   push:
     branches: [main, master]
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    # macos-13 是 Intel 镜像，macos-15 是 arm64 镜像；
-    # 两者同时跑，哪个可用就用哪个产出的 ipa（arm64 镜像在部分账号上会直接被取消）。
+    # macos-15 是 arm64 镜像，macos-13 是 Intel；两个都跑，谁先成功用谁。
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13, macos-15]
+        os: [macos-15, macos-13]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 40
 
@@ -31,6 +34,7 @@ jobs:
         run: |
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-version
+          xcodebuild -list -project ChaoxingSigner.xcodeproj
 
       - name: 编译（关闭签名）
         id: build
@@ -51,34 +55,32 @@ jobs:
             build 2>&1 | tee build.log
           exit $?
 
-      - name: 把编译错误写进 Summary
+      - name: 把编译日志推到 ci-logs 分支
         if: always()
+        continue-on-error: true
         run: |
+          OUT="ci-error-${{ matrix.os }}.txt"
           {
-            echo '## 编译结果'
-            echo ''
-            echo "- 镜像：${{ matrix.os }}"
-            echo "- 退出码：${{ steps.build.outcome }}"
-            echo ''
-            if grep -qE '(^| )error: ' build.log 2>/dev/null; then
-              echo '### errors'
-              echo '```'
-              grep -nE '(^| )error: ' build.log | head -80
-              echo '```'
-            fi
-            if grep -qE 'warning: (unable to|no such|unknown)' build.log 2>/dev/null; then
-              echo '### notable warnings'
-              echo '```'
-              grep -nE 'warning: (unable to|no such|unknown)' build.log | head -30
-              echo '```'
-            fi
-            if [ ! -s build.log ] || ! grep -qE '(^| )error: ' build.log; then
-              echo '### 日志尾部'
-              echo '```'
-              tail -60 build.log 2>/dev/null
-              echo '```'
-            fi
-          } >> "$GITHUB_STEP_SUMMARY"
+            echo "os: ${{ matrix.os }}"
+            echo "outcome: ${{ steps.build.outcome }}"
+            echo ""
+            echo "===== errors ====="
+            grep -nE '(^| )error: ' build.log 2>/dev/null | head -120
+            echo ""
+            echo "===== warnings (selected) ====="
+            grep -nE 'warning: ' build.log 2>/dev/null | head -40
+            echo ""
+            echo "===== tail ====="
+            tail -120 build.log 2>/dev/null
+          } > "$OUT"
+          cp "$OUT" /tmp/"$OUT"
+          git config user.name "ci-bot"
+          git config user.email "ci-bot@local"
+          git checkout -B ci-logs
+          cp /tmp/"$OUT" "$OUT"
+          git add -f "$OUT"
+          git commit -m "ci: ${{ matrix.os }} $(date -u +%Y%m%dT%H%M%SZ)" || true
+          git push -f origin ci-logs
 
       - name: 打包未签名 ipa
         if: steps.build.outcome == 'success'
