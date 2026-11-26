@@ -1,0 +1,326 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		34F5741CCDAFBA9ED3CE8C86 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0661F421A9DAF96A220718FF /* App/AppState.swift */; };
+		8E2EAF7B724DD757C3C67804 /* ChaoxingSignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E417BF9944445A74AB41306 /* App/ChaoxingSignerApp.swift */; };
+		BEB2446E4B840E5444233A1C /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD7F43BA0E095628F22D20B /* Core/AccountStore.swift */; };
+		8B4D08962D27F1F2873207FF /* BackgroundSigning.swift in Sources */ = {isa = PBXBuildFile; fileRef = F107393D94456D6B8997755A /* Core/BackgroundSigning.swift */; };
+		21070B046F2B915281FCF621 /* ChaoxingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483CF3384908FE97F66687B9 /* Core/ChaoxingClient.swift */; };
+		E32629733F95FD60AFDD99C7 /* ChaoxingEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C38EDFADFCB4F527580F43E /* Core/ChaoxingEndpoints.swift */; };
+		705706116BA682777253470C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF085A817DA6047FCCBBA0 /* Core/Crypto.swift */; };
+		AE9F48AF90B25D27FC851C0A /* DeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60959823286B0A7EB5AF23A0 /* Core/DeviceIdentity.swift */; };
+		50424F3E7899DC22FB899694 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9622C3932C07D5675BAE95C /* Core/HTTPClient.swift */; };
+		708DA017A61F6FB462DF8A58 /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F6D147952E18EA2BD11405 /* Core/LocationProvider.swift */; };
+		67BC63D9CF99C2A4CBCBDBB4 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F289CAE576C56C787C9036F /* Core/Models.swift */; };
+		BBE434B442DEF46843A8B876 /* SignCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A055DA1F6650C6B3E2DCF4 /* Core/SignCoordinator.swift */; };
+		54C97D50C15AA8E173B71427 /* SignResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B34D66442336664CD03F5 /* Core/SignResponseParser.swift */; };
+		B8C8F4AFC9E02ABE9CD1C49B /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A7F108084FEB6F989D8FE /* UI/ActivityListView.swift */; };
+		13EBABD482FF4F3875C093F1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092B7ECE4AD78B69B574D7AA /* UI/LoginView.swift */; };
+		3CA2F51DCEB66C30A4CE9D9B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C54325064C432DF7E1B1E1F /* UI/RootView.swift */; };
+		A9ADD8C5E30054E3F46683E9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3393949AC9004D2E395F2023 /* UI/SettingsView.swift */; };
+		ABF0AA4713F9650DE77A18AD /* SignActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE00A24F4B0C0DE08FA67AF /* UI/SignActionSheet.swift */; };
+		76C2B8773E07C9FD064E42E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7C6C251336CA1D1EEE33A7C /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0661F421A9DAF96A220718FF /* App/AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState.swift"; sourceTree = "<group>"; };
+		0E417BF9944445A74AB41306 /* App/ChaoxingSignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChaoxingSignerApp.swift"; sourceTree = "<group>"; };
+		EAD7F43BA0E095628F22D20B /* Core/AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountStore.swift"; sourceTree = "<group>"; };
+		F107393D94456D6B8997755A /* Core/BackgroundSigning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackgroundSigning.swift"; sourceTree = "<group>"; };
+		483CF3384908FE97F66687B9 /* Core/ChaoxingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChaoxingClient.swift"; sourceTree = "<group>"; };
+		1C38EDFADFCB4F527580F43E /* Core/ChaoxingEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChaoxingEndpoints.swift"; sourceTree = "<group>"; };
+		E4BF085A817DA6047FCCBBA0 /* Core/Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Crypto.swift"; sourceTree = "<group>"; };
+		60959823286B0A7EB5AF23A0 /* Core/DeviceIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceIdentity.swift"; sourceTree = "<group>"; };
+		F9622C3932C07D5675BAE95C /* Core/HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPClient.swift"; sourceTree = "<group>"; };
+		10F6D147952E18EA2BD11405 /* Core/LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationProvider.swift"; sourceTree = "<group>"; };
+		3F289CAE576C56C787C9036F /* Core/Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models.swift"; sourceTree = "<group>"; };
+		66A055DA1F6650C6B3E2DCF4 /* Core/SignCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignCoordinator.swift"; sourceTree = "<group>"; };
+		5F6B34D66442336664CD03F5 /* Core/SignResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignResponseParser.swift"; sourceTree = "<group>"; };
+		CB5A7F108084FEB6F989D8FE /* UI/ActivityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityListView.swift"; sourceTree = "<group>"; };
+		092B7ECE4AD78B69B574D7AA /* UI/LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView.swift"; sourceTree = "<group>"; };
+		6C54325064C432DF7E1B1E1F /* UI/RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootView.swift"; sourceTree = "<group>"; };
+		3393949AC9004D2E395F2023 /* UI/SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
+		1AE00A24F4B0C0DE08FA67AF /* UI/SignActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignActionSheet.swift"; sourceTree = "<group>"; };
+		7B317B44935B5652E9A0EA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Resources/Info.plist; sourceTree = "<group>"; };
+		D7C6C251336CA1D1EEE33A7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		F5BF48AA40CAD7891EB709FC /* ChaoxingSigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChaoxingSigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EA8594C83D82D703505DFABE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2B731CEFC6751AAE0EC69B98 = {
+			isa = PBXGroup;
+			children = (
+				22EE43E5F9A80405E6DFEACD,
+				39173558B7F8BBD9119F85A1,
+				96D7D5659D1003A0F191DD67,
+				7B317B44935B5652E9A0EA11 /* Info.plist */,
+				D7C6C251336CA1D1EEE33A7C /* Assets.xcassets */,
+				0A2C978E52A76F0AA9F68BB5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0A2C978E52A76F0AA9F68BB5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5BF48AA40CAD7891EB709FC /* ChaoxingSigner.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		22EE43E5F9A80405E6DFEACD /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0661F421A9DAF96A220718FF /* AppState.swift */,
+				0E417BF9944445A74AB41306 /* ChaoxingSignerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		39173558B7F8BBD9119F85A1 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				EAD7F43BA0E095628F22D20B /* AccountStore.swift */,
+				F107393D94456D6B8997755A /* BackgroundSigning.swift */,
+				483CF3384908FE97F66687B9 /* ChaoxingClient.swift */,
+				1C38EDFADFCB4F527580F43E /* ChaoxingEndpoints.swift */,
+				E4BF085A817DA6047FCCBBA0 /* Crypto.swift */,
+				60959823286B0A7EB5AF23A0 /* DeviceIdentity.swift */,
+				F9622C3932C07D5675BAE95C /* HTTPClient.swift */,
+				10F6D147952E18EA2BD11405 /* LocationProvider.swift */,
+				3F289CAE576C56C787C9036F /* Models.swift */,
+				66A055DA1F6650C6B3E2DCF4 /* SignCoordinator.swift */,
+				5F6B34D66442336664CD03F5 /* SignResponseParser.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		96D7D5659D1003A0F191DD67 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CB5A7F108084FEB6F989D8FE /* ActivityListView.swift */,
+				092B7ECE4AD78B69B574D7AA /* LoginView.swift */,
+				6C54325064C432DF7E1B1E1F /* RootView.swift */,
+				3393949AC9004D2E395F2023 /* SettingsView.swift */,
+				1AE00A24F4B0C0DE08FA67AF /* SignActionSheet.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3FC5868E1243F0441B2E4EBD /* ChaoxingSigner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 710E4C902EAB327A675B770E /* Build configuration list for PBXNativeTarget "ChaoxingSigner" */;
+			buildPhases = (
+				80DAA310FC779194862C0D32 /* Sources */,
+				EA8594C83D82D703505DFABE /* Frameworks */,
+				16B6DB84760A9CCAF0F0E448 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChaoxingSigner;
+			productName = ChaoxingSigner;
+			productReference = F5BF48AA40CAD7891EB709FC /* ChaoxingSigner.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46F86FAA6BBF9AC94A7E4595 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					3FC5868E1243F0441B2E4EBD = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = AC4D63F12EBBDCB32DFBA89F /* Build configuration list for PBXProject "ChaoxingSigner" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2B731CEFC6751AAE0EC69B98;
+			productRefGroup = 0A2C978E52A76F0AA9F68BB5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3FC5868E1243F0441B2E4EBD /* ChaoxingSigner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		16B6DB84760A9CCAF0F0E448 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76C2B8773E07C9FD064E42E9,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		80DAA310FC779194862C0D32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34F5741CCDAFBA9ED3CE8C86 /* AppState.swift in Sources */,
+				8E2EAF7B724DD757C3C67804 /* ChaoxingSignerApp.swift in Sources */,
+				BEB2446E4B840E5444233A1C /* AccountStore.swift in Sources */,
+				8B4D08962D27F1F2873207FF /* BackgroundSigning.swift in Sources */,
+				21070B046F2B915281FCF621 /* ChaoxingClient.swift in Sources */,
+				E32629733F95FD60AFDD99C7 /* ChaoxingEndpoints.swift in Sources */,
+				705706116BA682777253470C /* Crypto.swift in Sources */,
+				AE9F48AF90B25D27FC851C0A /* DeviceIdentity.swift in Sources */,
+				50424F3E7899DC22FB899694 /* HTTPClient.swift in Sources */,
+				708DA017A61F6FB462DF8A58 /* LocationProvider.swift in Sources */,
+				67BC63D9CF99C2A4CBCBDBB4 /* Models.swift in Sources */,
+				BBE434B442DEF46843A8B876 /* SignCoordinator.swift in Sources */,
+				54C97D50C15AA8E173B71427 /* SignResponseParser.swift in Sources */,
+				B8C8F4AFC9E02ABE9CD1C49B /* ActivityListView.swift in Sources */,
+				13EBABD482FF4F3875C093F1 /* LoginView.swift in Sources */,
+				3CA2F51DCEB66C30A4CE9D9B /* RootView.swift in Sources */,
+				A9ADD8C5E30054E3F46683E9 /* SettingsView.swift in Sources */,
+				ABF0AA4713F9650DE77A18AD /* SignActionSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5DFF4F54E01360C985A107DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5F933D77A9C901C5D51DFD6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		497CE359E62989D4957947D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChaoxingSigner/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.aquamarine5.cxsign;
+				PRODUCT_NAME = ChaoxingSigner;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		EC44B42E329CFABF13136126 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChaoxingSigner/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.aquamarine5.cxsign;
+				PRODUCT_NAME = ChaoxingSigner;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AC4D63F12EBBDCB32DFBA89F /* Build configuration list for PBXProject "ChaoxingSigner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DFF4F54E01360C985A107DF /* Debug */,
+				5F933D77A9C901C5D51DFD6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		710E4C902EAB327A675B770E /* Build configuration list for PBXNativeTarget "ChaoxingSigner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				497CE359E62989D4957947D3 /* Debug */,
+				EC44B42E329CFABF13136126 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+}

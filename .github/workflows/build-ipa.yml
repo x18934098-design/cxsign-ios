@@ -1,0 +1,56 @@
+name: build-ipa
+
+# 在 GitHub 的 macOS runner 上编译出未签名 ipa，
+# 然后把 ipa 下载到 Windows，用 Sideloadly / AltStore 用自己的 Apple ID 签名装进 iPhone。
+#
+# 用法：把 ChaoxingSigner-iOS 目录里的内容推到一个 GitHub 仓库（作为仓库根目录），
+# 打开 Actions → build-ipa → Run workflow，跑完在 Artifacts 里下载 ChaoxingSigner-unsigned。
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 环境信息
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+
+      - name: 编译（关闭签名）
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project ChaoxingSigner.xcodeproj \
+            -scheme ChaoxingSigner \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGN_ENTITLEMENTS="" \
+            build
+
+      - name: 打包未签名 ipa
+        run: |
+          APP="build/Build/Products/Release-iphoneos/ChaoxingSigner.app"
+          test -d "$APP"
+          mkdir -p Payload
+          cp -R "$APP" Payload/
+          zip -qry ChaoxingSigner-unsigned.ipa Payload
+          ls -lh ChaoxingSigner-unsigned.ipa
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Info.plist"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ChaoxingSigner-unsigned
+          path: ChaoxingSigner-unsigned.ipa
+          if-no-files-found: error
