@@ -113,3 +113,23 @@ jobs:
           name: ChaoxingSigner-unsigned-${{ matrix.os }}
           path: ChaoxingSigner-unsigned.ipa
           if-no-files-found: error
+
+      # 把 ipa 放到 build-artifacts 分支，任何人都能直接下载（不需要登录 GitHub）。
+      - name: 发布 ipa 到 build-artifacts 分支
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          mkdir -p /tmp/pub
+          cp ChaoxingSigner-unsigned.ipa /tmp/pub/
+          cp build.log /tmp/pub/build-macos.log 2>/dev/null || true
+          git config user.name "ci-bot"
+          git config user.email "ci-bot@local"
+          git checkout --orphan build-artifacts
+          git rm -rf --cached . >/dev/null 2>&1 || true
+          rm -rf ChaoxingSigner ChaoxingSigner.xcodeproj Payload build .github
+          cp /tmp/pub/ChaoxingSigner-unsigned.ipa .
+          cp /tmp/pub/build-macos.log . 2>/dev/null || true
+          printf '未签名 ipa，用 Sideloadly 自签安装。\n' > README.md
+          git add -A
+          git commit -m "build: ${{ matrix.os }} $(date -u +%Y%m%dT%H%M%SZ)" || true
+          git push -f origin build-artifacts
