@@ -1,0 +1,13 @@
+# macOS / Xcode
+build/
+DerivedData/
+*.ipa
+*.dSYM
+xcuserdata/
+*.xcuserdatad
+Payload/
+
+# 逆向产物（工程目录内不保留）
+work/
+
+.DS_Store
