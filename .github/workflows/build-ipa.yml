@@ -6,7 +6,7 @@ name: build-ipa
 # 用法：把 ChaoxingSigner-iOS 目录里的内容推到一个 GitHub 仓库（作为仓库根目录），
 # 打开 Actions -> build-ipa -> Run workflow，跑完在 Artifacts 里下载 ChaoxingSigner-unsigned。
 #
-# 编译日志：无论成功失败，都会把日志写成仓库 ci-logs 分支上的 ci-error-macos-13.txt，
+# 编译日志：无论成功失败，都会把日志写成 ci-logs 分支上的 ci-error-<os>.txt，
 # 这样不登录 GitHub 也能读到具体报错（raw.githubusercontent.com）。
 
 on:
@@ -19,10 +19,15 @@ permissions:
 
 jobs:
   build:
-    # macos-13 是这批账号上唯一稳定能排到 runner 的镜像；
-    # macos-14 / macos-15 的 arm64 机型会出现 job was not acquired by Runner。
-    runs-on: macos-13
-    timeout-minutes: 40
+    # macos-15 / macos-14 是 arm64 机型，macos-13 是 Intel 机型。
+    # 这批账号上两种镜像都可能长时间排队或被判 "not acquired"，
+    # 所以两个都跑，谁先拿到 runner 用谁。
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-13]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v4
@@ -64,9 +69,9 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          OUT="ci-error-macos-13.txt"
+          OUT="ci-error-${{ matrix.os }}.txt"
           {
-            echo "os: macos-13"
+            echo "os: ${{ matrix.os }}"
             echo "outcome: ${{ steps.build.outcome }}"
             echo ""
             echo "===== typecheck errors ====="
@@ -84,10 +89,11 @@ jobs:
           cp "$OUT" /tmp/"$OUT"
           git config user.name "ci-bot"
           git config user.email "ci-bot@local"
-          git checkout -B ci-logs
+          git fetch origin ci-logs || true
+          git checkout -B ci-logs origin/ci-logs 2>/dev/null || git checkout -B ci-logs
           cp /tmp/"$OUT" "$OUT"
           git add -f "$OUT"
-          git commit -m "ci: macos-13 $(date -u +%Y%m%dT%H%M%SZ)" || true
+          git commit -m "ci: ${{ matrix.os }} $(date -u +%Y%m%dT%H%M%SZ)" || true
           git push -f origin ci-logs
 
       - name: 打包未签名 ipa
@@ -104,6 +110,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.build.outcome == 'success'
         with:
-          name: ChaoxingSigner-unsigned-macos-13
+          name: ChaoxingSigner-unsigned-${{ matrix.os }}
           path: ChaoxingSigner-unsigned.ipa
           if-no-files-found: error
