@@ -4,9 +4,9 @@ name: build-ipa
 # 然后把 ipa 下载到 Windows，用 Sideloadly / AltStore 用自己的 Apple ID 签名装进 iPhone。
 #
 # 用法：把 ChaoxingSigner-iOS 目录里的内容推到一个 GitHub 仓库（作为仓库根目录），
-# 打开 Actions → build-ipa → Run workflow，跑完在 Artifacts 里下载 ChaoxingSigner-unsigned。
+# 打开 Actions -> build-ipa -> Run workflow，跑完在 Artifacts 里下载 ChaoxingSigner-unsigned。
 #
-# 编译日志：失败时会把错误写成仓库 ci-logs 分支上的 ci-error-<os>.txt，
+# 编译日志：无论成功失败，都会把日志写成仓库 ci-logs 分支上的 ci-error-macos-13.txt，
 # 这样不登录 GitHub 也能读到具体报错（raw.githubusercontent.com）。
 
 on:
@@ -19,12 +19,9 @@ permissions:
 
 jobs:
   build:
-    # macos-15 是 arm64 镜像，macos-13 是 Intel；两个都跑，谁先成功用谁。
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-15, macos-13]
-    runs-on: ${{ matrix.os }}
+    # macos-13 是这批账号上唯一稳定能排到 runner 的镜像；
+    # macos-14 / macos-15 的 arm64 机型会出现 job was not acquired by Runner。
+    runs-on: macos-13
     timeout-minutes: 40
 
     steps:
@@ -36,15 +33,13 @@ jobs:
           xcrun --sdk iphoneos --show-sdk-version
           xcodebuild -list -project ChaoxingSigner.xcodeproj
 
-      - name: 快速类型检查（一次列出所有 Swift 错误）
+      - name: 快速类型检查
         continue-on-error: true
         run: |
           SDK=$(xcrun --sdk iphoneos --show-sdk-path)
-          # shellcheck disable=SC2046
           xcrun swiftc -typecheck -sdk "$SDK" -target arm64-apple-ios17.0 \
-            $(find ChaoxingSigner -name '*.swift' | sort) 2>&1 | tee typecheck.log \
-            | grep -E 'error:|warning: .*(unused|never)' || true
-          echo "----" >> typecheck.log
+            $(find ChaoxingSigner -name '*.swift' | sort) 2>&1 | tee typecheck.log
+          echo "---- finished ----" >> typecheck.log
 
       - name: 编译（关闭签名）
         id: build
@@ -69,22 +64,22 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          OUT="ci-error-${{ matrix.os }}.txt"
+          OUT="ci-error-macos-13.txt"
           {
-            echo "os: ${{ matrix.os }}"
+            echo "os: macos-13"
             echo "outcome: ${{ steps.build.outcome }}"
             echo ""
             echo "===== typecheck errors ====="
-            grep -nE 'error: ' typecheck.log 2>/dev/null | head -120
+            grep -nE 'error: ' typecheck.log 2>/dev/null | head -150
             echo ""
             echo "===== build errors ====="
-            grep -nE '(^| )error: ' build.log 2>/dev/null | head -120
+            grep -nE '(^| )error: ' build.log 2>/dev/null | head -150
             echo ""
-            echo "===== warnings (selected) ====="
+            echo "===== warnings ====="
             grep -nE 'warning: ' build.log 2>/dev/null | head -40
             echo ""
             echo "===== tail ====="
-            tail -120 build.log 2>/dev/null
+            tail -150 build.log 2>/dev/null
           } > "$OUT"
           cp "$OUT" /tmp/"$OUT"
           git config user.name "ci-bot"
@@ -92,7 +87,7 @@ jobs:
           git checkout -B ci-logs
           cp /tmp/"$OUT" "$OUT"
           git add -f "$OUT"
-          git commit -m "ci: ${{ matrix.os }} $(date -u +%Y%m%dT%H%M%SZ)" || true
+          git commit -m "ci: macos-13 $(date -u +%Y%m%dT%H%M%SZ)" || true
           git push -f origin ci-logs
 
       - name: 打包未签名 ipa
@@ -109,6 +104,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.build.outcome == 'success'
         with:
-          name: ChaoxingSigner-unsigned-${{ matrix.os }}
+          name: ChaoxingSigner-unsigned-macos-13
           path: ChaoxingSigner-unsigned.ipa
           if-no-files-found: error
